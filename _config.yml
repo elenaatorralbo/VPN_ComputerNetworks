@@ -1,0 +1,30 @@
+title: VPN Comparison Guide
+description: A comprehensive guide to VPN services, protocols, and security
+baseurl: ""
+url: ""
+
+# Build settings
+markdown: kramdown
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-seo-tag
+
+# Exclude these files from production site
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .gitignore
+
+# Default layout for pages
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+
+# Custom variables
+logo: "/assets/images/logo.png"
