@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPN Comparison - Detailed Analysis</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles specific to the comparison page */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .comparison-table th {
+            background-color: var(--primary-color);
+            color: white;
+            position: sticky;
+            top: 70px;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f1f3f5;
+        }
+        
+        .provider-name {
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        .check-icon {
+            color: var(--accent-color);
+        }
+        
+        .x-icon {
+            color: #e74c3c;
+        }
+        
+        .speed-meter {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .speed-meter-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+        }
+        
+        .provider-section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .provider-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .provider-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        .provider-rating {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+        
+        .provider-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .detail-card {
+            background-color: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+        }
+        
+        .detail-card h4 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .detail-card i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .detail-card ul {
+            list-style-type: none;
+        }
+        
+        .detail-card li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .detail-card li i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .pros, .cons {
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+        }
+        
+        .pros {
+            background-color: rgba(46, 204, 113, 0.1);
+        }
+        
+        .cons {
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+        
+        .pros h4, .cons h4 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pros i {
+            color: var(--accent-color);
+            margin-right: 0.5rem;
+        }
+        
+        .cons i {
+            color: #e74c3c;
+            margin-right: 0.5rem;
+        }
+        
+        .tab-container {
+            margin-bottom: 2rem;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 2rem;
+        }
+        
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .filter-options {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .filter-label {
+            font-weight: 500;
+        }
+        
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        }
+        
+        .filter-checkbox input {
+            margin-right: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <span class="shield-icon"><i class="fas fa-shield-alt"></i></span>
+                <h1>VPN Compare</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="comparison.html" class="active">Comparison</a></li>
+                    <li><a href="protocols.html">Protocols</a></li>
+                    <li><a href="tutorials.html">Tutorials</a></li>
+                    <li><a href="security.html">Security</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="padding-top: 3rem; padding-bottom: 3rem;">
+        <h1 class="section-title">VPN Service Comparison</h1>
+        
+        <div class="filter-options">
+            <span class="filter-label">Filter by:</span>
+            <div class="filter-checkbox">
+                <input type="checkbox" id="no-logs" checked>
+                <label for="no-logs">No-logs Policy</label>
+            </div>
+            <div class="filter-checkbox">
+                <input type="checkbox" id="kill-switch" checked>
+                <label for="kill-switch">Kill Switch</label>
+            </div>
+            <div class="filter-checkbox">
+                <input type="checkbox" id="p2p" checked>
+                <label for="p2p">P2P Support</label>
+            </div>
+            <div class="filter-checkbox">
+                <input type="checkbox" id="streaming" checked>
+                <label for="streaming">Streaming</label>
+            </div>
+        </div>
+        
+        <div class="tab-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="table">Comparison Table</div>
+                <div class="tab" data-tab="detailed">Detailed Reviews</div>
+            </div>
+            
+            <div class="tab-content active" id="table-content">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Provider</th>
+                            <th>Price (Monthly)</th>
+                            <th>Simultaneous Connections</th>
+                            <th>Countries</th>
+                            <th>Servers</th>
+                            <th>Encryption</th>
+                            <th>No-logs Policy</th>
+                            <th>Kill Switch</th>
+                            <th>Speed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="nordvpn">
+                            <td class="provider-name">NordVPN</td>
+                            <td>$11.99</td>
+                            <td>6</td>
+                            <td>60+</td>
+                            <td>5,500+</td>
+                            <td>AES-256</td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td>
+                                <div class="speed-meter">
+                                    <div class="speed-meter-fill" style="width: 85%;"></div>
+                                </div>
+                                <small>340 Mbps avg.</small>
+                            </td>
+                        </tr>
+                        <tr id="expressvpn">
+                            <td class="provider-name">ExpressVPN</td>
+                            <td>$12.95</td>
+                            <td>5</td>
+                            <td>94</td>
+                            <td>3,000+</td>
+                            <td>AES-256</td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td>
+                                <div class="speed-meter">
+                                    <div class="speed-meter-fill" style="width: 80%;"></div>
+                                </div>
+                                <small>320 Mbps avg.</small>
+                            </td>
+                        </tr>
+                        <tr id="surfshark">
+                            <td class="provider-name">Surfshark</td>
+                            <td>$12.95</td>
+                            <td>Unlimited</td>
+                            <td>65+</td>
+                            <td>3,200+</td>
+                            <td>AES-256</td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td>
+                                <div class="speed-meter">
+                                    <div class="speed-meter-fill" style="width: 77%;"></div>
+                                </div>
+                                <small>310 Mbps avg.</small>
+                            </td>
+                        </tr>
+                        <tr id="cyberghost">
+                            <td class="provider-name">CyberGhost</td>
+                            <td>$12.99</td>
+                            <td>7</td>
+                            <td>90+</td>
+                            <td>7,500+</td>
+                            <td>AES-256</td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td>
+                                <div class="speed-meter">
+                                    <div class="speed-meter-fill" style="width: 70%;"></div>
+                                </div>
+                                <small>280 Mbps avg.</small>
+                            </td>
+                        </tr>
+                        <tr id="pia">
+                            <td class="provider-name">Private Internet Access</td>
+                            <td>$11.95</td>
+                            <td>10</td>
+                            <td>78+</td>
+                            <td>35,000+</td>
+                            <td>AES-256</td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td>
+                                <div class="speed-meter">
+                                    <div class="speed-meter-fill" style="width: 74%;"></div>
+                                </div>
+                                <small>295 Mbps avg.</small>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h2 class="section-title">Security Features Comparison</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>NordVPN</th>
+                            <th>ExpressVPN</th>
+                            <th>Surfshark</th>
+                            <th>CyberGhost</th>
+                            <th>PIA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Double VPN</td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-times x-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-times x-icon"></i></td>
+                            <td><i class="fas fa-times x-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Tor over VPN</td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-times x-icon"></i></td>
+                            <td><i class="fas fa-times x-icon"></i></td>
+                            <td><i class="fas fa-times x-icon"></i></td>
+                            <td><i class="fas fa-times x-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Ad Blocker</td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-times x-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Obfuscated Servers</td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-times x-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td>RAM-only Servers</td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Independent Audit</td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                            <td><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tab-content" id="detailed-content">
+                <section class="provider-section" id="nordvpn-section">
+                    <div class="provider-header">
+                        <div class="provider-logo">NordVPN</div>
+                        <div class="provider-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="score">4.8/5</span>
+                        </div>
+                    </div>
+                    
+                    <div class="provider-details">
+                        <div class="detail-card">
+                            <h4><i class="fas fa-server"></i> Infrastructure</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> 5,500+ servers in 60+ countries</li>
+                                <li><i class="fas fa-check"></i> RAM-only servers (no data storage)</li>
+                                <li><i class="fas fa-check"></i> 10 Gbps servers in select locations</li>
+                                <li><i class="fas fa-check"></i> Obfuscated servers for restricted regions</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="detail-card">
+                            <h4><i class="fas fa-shield-alt"></i> Security</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> AES-256 encryption</li>
+                                <li><i class="fas fa-check"></i> NordLynx protocol (based on WireGuard)</li>
+                                <li><i class="fas fa-check"></i> Double VPN feature</li>
+                                <li><i class="fas fa-check"></i> Onion over VPN support</li>
+                                <li><i class="fas fa-check"></i> Kill switch functionality</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="detail-card">
+                            <h4><i class="fas fa-user-shield"></i> Privacy</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Strict no-logs policy</li>
+                                <li><i class="fas fa-check"></i> Based in Panama (privacy-friendly)</li>
+                                <li><i class="fas fa-check"></i> Independent security audits</li>
+                                <li><i class="fas fa-check"></i> CyberSec feature blocks ads and malware</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4><i class="fas fa-thumbs-up"></i> Pros</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Excellent speeds with NordLynx protocol</li>
+                                <li><i class="fas fa-check"></i> Strong security features</li>
+                                <li><i class="fas fa-check"></i> Wide server coverage</li>
+                                <li><i class="fas fa-check"></i> Works with most streaming services</li>
+                                <li><i class="fas fa-check"></i> Specialty servers for specific needs</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cons">
+                            <h4><i class="fas fa-thumbs-down"></i> Cons</h4>
+                            <ul>
+                                <li><i class="fas fa-times"></i> Desktop app is somewhat resource-intensive</li>
+                                <li><i class="fas fa-times"></i> Only 6 simultaneous connections</li>
+                                <li><i class="fas fa-times"></i> No router app available</li>
+                                <li><i class="fas fa-times"></i> Occasional server connection issues</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p>NordVPN stands out with its robust security features and strong performance. The proprietary NordLynx protocol delivers impressive speeds while maintaining security. With specialty servers for double VPN, Tor over VPN, and obfuscation, it's ideal for users with high privacy requirements. The company's Panama jurisdiction provides an additional layer of privacy protection.</p>
+                </section>
+                
+                <!-- Additional provider sections would follow here -->
+                
+                <div class="text-center">
+                    <a href="#" class="btn primary-btn">Load More Providers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="shield-icon"><i class="fas fa-shield-alt"></i></span>
+                    <h2>VPN Compare</h2>
+                    <p>Your guide to online privacy and security</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-menu">
+                        <h3>Pages</h3>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="comparison.html">Comparison</a></li>
+                            <li><a href="protocols.html">Protocols</a></li>
+                            <li><a href="tutorials.html">Tutorials</a></li>
+                            <li><a href="security.html">Security</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-menu">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="security.html#best-practices">Security Best Practices</a></li>
+                            <li><a href="tutorials.html">Setup Guides</a></li>
+                            <li><a href="protocols.html">VPN Protocols</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 VPN Comparison Guide. All rights reserved.</p>
+                <p>This is an educational resource. We are not affiliated with any VPN provider.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                // Show corresponding tab content
+                const tabName = tab.getAttribute('data-tab');
+                document.getElementById(`${tabName}-content`).classList.add('active');
+            });
+        });
+        
+        // FAQ toggle functionality 
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                const isActive = item.classList.contains('active');
+                
+                // Close all open items
+                document.querySelectorAll('.faq-item').forEach(faqItem => {
+                    faqItem.classList.remove('active');
+                    faqItem.querySelector('.toggle-icon i').className = 'fas fa-plus';
+                });
+                
+                // If the clicked item wasn't active, open it
+                if (!isActive) {
+                    item.classList.add('active');
+                    question.querySelector('.toggle-icon i').className = 'fas fa-minus';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
